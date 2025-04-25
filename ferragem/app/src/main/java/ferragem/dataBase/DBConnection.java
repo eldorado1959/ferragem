@@ -9,7 +9,15 @@ public class DBConnection {
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    public static Connection getConnection()  {
+        
+        try (Connection conexao = DriverManager.getConnection(URL, USER, PASSWORD)){
+        CreateTable.criarTabelas(conexao);
+        return conexao;
+        } catch (SQLException error){
+            System.out.println("Erro: " + error.getMessage());
+        }
+        
+        return null;
     }
 }

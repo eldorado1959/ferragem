@@ -1,13 +1,21 @@
 package ferragem.view;
 
 import ferragem.controller.ProductController;
+import ferragem.dataBase.DBConnection;
+import static ferragem.dataBase.DBConnection.getConnection;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+
+
 
 public class Main {
     public static void main(String[] args) {
-        // Cria janela principal
+        
+        Connection conexao = DBConnection.getConnection();
+        
+// Cria janela principal
         JFrame frame = new JFrame("Loja de Ferragens");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
