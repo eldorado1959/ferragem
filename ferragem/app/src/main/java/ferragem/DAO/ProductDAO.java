@@ -1,7 +1,7 @@
 package ferragem.dao;
 
 import ferragem.dataBase.DBConnection;
-import ferragem.database.DBConnection;
+
 import ferragem.model.Product;
 
 import java.sql.*;
@@ -21,10 +21,10 @@ public class ProductDAO {
             stmt.setDouble(3, product.getPrice());
             stmt.executeUpdate();
 
-            System.out.println("Product inserted successfully.");
+            System.out.println("Produo cadastrado com sucesso....");
 
         } catch (SQLException e) {
-            System.err.println("Error inserting product: " + e.getMessage());
+            System.err.println("Erro ao inserir produto: " + e.getMessage());
         }
     }
 
@@ -39,15 +39,15 @@ public class ProductDAO {
             while (rs.next()) {
                 Product product = new Product(
                     rs.getInt("id"),
-                    rs.getString("description"),
-                    rs.getInt("quantity"),
-                    rs.getDouble("price")
+                    rs.getString("descricao"),
+                    rs.getInt("quantidade"),
+                    rs.getDouble("preco")
                 );
                 products.add(product);
             }
 
         } catch (SQLException e) {
-            System.err.println("Error fetching products: " + e.getMessage());
+            System.err.println("Erro ao buscar produtos: " + e.getMessage());
         }
 
         return products;
@@ -66,14 +66,14 @@ public class ProductDAO {
             if (rs.next()) {
                 product = new Product(
                     rs.getInt("id"),
-                    rs.getString("description"),
-                    rs.getInt("quantity"),
-                    rs.getDouble("price")
+                    rs.getString("descricao"),
+                    rs.getInt("quantidade"),
+                    rs.getDouble("preco")
                 );
             }
 
         } catch (SQLException e) {
-            System.err.println("Error finding product: " + e.getMessage());
+            System.err.println("Erro ao consultar produto: " + e.getMessage());
         }
 
         return product;
@@ -92,10 +92,10 @@ public class ProductDAO {
 
             stmt.executeUpdate();
 
-            System.out.println("Product updated successfully.");
+            System.out.println("Produto alterado ....");
 
         } catch (SQLException e) {
-            System.err.println("Error updating product: " + e.getMessage());
+            System.err.println("Erro ao alterar produto: " + e.getMessage());
         }
     }
 
@@ -108,10 +108,10 @@ public class ProductDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
-            System.out.println("Product deleted successfully.");
+            System.out.println("Produto deletado....");
 
         } catch (SQLException e) {
-            System.err.println("Error deleting product: " + e.getMessage());
+            System.err.println("Erro ao deletar produto: " + e.getMessage());
         }
     }
 }

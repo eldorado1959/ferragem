@@ -2,65 +2,86 @@ package ferragem.view;
 
 import ferragem.controller.ProductController;
 
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        // Cria janela principal
+        JFrame frame = new JFrame("Loja de Ferragens");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLayout(new GridLayout(6, 1, 10, 10));
+
         ProductController controller = new ProductController();
 
-        int option;
-        do {
-            System.out.println("\n=== Hardware Store Menu ===");
-            System.out.println("1 - Add Product");
-            System.out.println("2 - List Products");
-            System.out.println("3 - Update Product");
-            System.out.println("4 - Delete Product");
-            System.out.println("5 - Show Product by ID");
-            System.out.println("0 - Exit");
-            System.out.print("Choose an option: ");
-            option = scanner.nextInt();
-            scanner.nextLine(); // clear buffer
-
-            switch (option) {
-                case 1 -> {
-                    System.out.print("Description: ");
-                    String desc = scanner.nextLine();
-                    System.out.print("Quantity: ");
-                    int qty = scanner.nextInt();
-                    System.out.print("Price: ");
-                    double price = scanner.nextDouble();
-                    controller.createProduct(desc, qty, price);
-                }
-                case 2 -> controller.listProducts();
-                case 3 -> {
-                    System.out.print("Product ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine(); // clear buffer
-                    System.out.print("New Description: ");
-                    String desc = scanner.nextLine();
-                    System.out.print("New Quantity: ");
-                    int qty = scanner.nextInt();
-                    System.out.print("New Price: ");
-                    double price = scanner.nextDouble();
-                    controller.updateProduct(id, desc, qty, price);
-                }
-                case 4 -> {
-                    System.out.print("Product ID to delete: ");
-                    int id = scanner.nextInt();
-                    controller.deleteProduct(id);
-                }
-                case 5 -> {
-                    System.out.print("Product ID to show: ");
-                    int id = scanner.nextInt();
-                    controller.showProduct(id);
-                }
-                case 0 -> System.out.println("Exiting...");
-                default -> System.out.println("Invalid option.");
+        // Botão Adicionar Produto
+        JButton addButton = new JButton("Adicionar Produto");
+        addButton.addActionListener(e -> {
+            String descricao = JOptionPane.showInputDialog("Descrição:");
+            String quantidadeStr = JOptionPane.showInputDialog("Quantidade:");
+            String precoStr = JOptionPane.showInputDialog("Preço:");
+            try {
+                int quantidade = Integer.parseInt(quantidadeStr);
+                double preco = Double.parseDouble(precoStr);
+                controller.createProduct(descricao, quantidade, preco);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Entrada inválida.");
             }
+        });
 
-        } while (option != 0);
+        // Botão Listar Produtos
+        JButton listButton = new JButton("Listar Produtos");
+        listButton.addActionListener(e -> controller.listProducts());
 
-        scanner.close();
+        // Botão Alterar Produto
+        JButton updateButton = new JButton("Alterar Produto");
+        updateButton.addActionListener(e -> {
+            try {
+                int id = Integer.parseInt(JOptionPane.showInputDialog("ID do Produto:"));
+                String desc = JOptionPane.showInputDialog("Nova Descrição:");
+                int qty = Integer.parseInt(JOptionPane.showInputDialog("Nova Quantidade:"));
+                double price = Double.parseDouble(JOptionPane.showInputDialog("Novo Preço:"));
+                controller.updateProduct(id, desc, qty, price);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Entrada inválida.");
+            }
+        });
+
+        // Botão Deletar Produto
+        JButton deleteButton = new JButton("Excluir Produto");
+        deleteButton.addActionListener(e -> {
+            try {
+                int id = Integer.parseInt(JOptionPane.showInputDialog("ID do Produto a excluir:"));
+                controller.deleteProduct(id);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Entrada inválida.");
+            }
+        });
+
+        // Botão Buscar por ID
+        JButton searchButton = new JButton("Buscar Produto por ID");
+        searchButton.addActionListener(e -> {
+            try {
+                int id = Integer.parseInt(JOptionPane.showInputDialog("ID do Produto:"));
+                controller.showProduct(id);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Entrada inválida.");
+            }
+        });
+
+        // Botão Sair
+        JButton exitButton = new JButton("Sair");
+        exitButton.addActionListener(e -> System.exit(0));
+
+        // Adiciona os botões à janela
+        frame.add(addButton);
+        frame.add(listButton);
+        frame.add(updateButton);
+        frame.add(deleteButton);
+        frame.add(searchButton);
+        frame.add(exitButton);
+
+        frame.setVisible(true);
     }
 }

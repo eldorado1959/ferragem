@@ -6,7 +6,7 @@ import ferragem.model.Product;
 import java.util.List;
 
 public class ProductService {
-    private ProductDAO productDAO;
+    private final ProductDAO productDAO;
 
     public ProductService() {
         this.productDAO = new ProductDAO();
