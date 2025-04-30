@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class CreateTable {
     public static void criarTabelas(Connection conexao) throws SQLException {
         String criarTabelaUsuarios = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255));";
-        String criarTabelaProdutos = "CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255));";
+        String criarTabelaProdutos = "CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY KEY, descricao VARCHAR(255), quantidade INT, preco DOUBLE);";
         
         Statement statement = conexao.createStatement();
         statement.execute(criarTabelaUsuarios);

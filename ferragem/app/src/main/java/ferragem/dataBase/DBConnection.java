@@ -11,7 +11,8 @@ public class DBConnection {
 
     public static Connection getConnection()  {
         
-        try (Connection conexao = DriverManager.getConnection(URL, USER, PASSWORD)){
+        try {
+        Connection conexao = DriverManager.getConnection(URL, USER, PASSWORD);
         CreateTable.criarTabelas(conexao);
         return conexao;
         } catch (SQLException error){

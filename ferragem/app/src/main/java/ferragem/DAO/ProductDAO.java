@@ -1,7 +1,6 @@
 package ferragem.dao;
 
 import ferragem.dataBase.DBConnection;
-
 import ferragem.model.Product;
 
 import java.sql.*;
@@ -10,8 +9,11 @@ import java.util.List;
 
 public class ProductDAO {
 
+    /**
+     * Insere um novo produto no banco de dados.
+     */
     public void insert(Product product) {
-        String sql = "INSERT INTO products (description, quantity, price) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO products (descricao, quantidade, preco) VALUES (?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -19,15 +21,19 @@ public class ProductDAO {
             stmt.setString(1, product.getDescription());
             stmt.setInt(2, product.getQuantity());
             stmt.setDouble(3, product.getPrice());
+
             stmt.executeUpdate();
 
-            System.out.println("Produo cadastrado com sucesso....");
+            System.out.println("Produto cadastrado com sucesso!");
 
         } catch (SQLException e) {
             System.err.println("Erro ao inserir produto: " + e.getMessage());
         }
     }
 
+    /**
+     * Retorna todos os produtos cadastrados no banco de dados.
+     */
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM products";
@@ -53,6 +59,9 @@ public class ProductDAO {
         return products;
     }
 
+    /**
+     * Busca um produto pelo ID.
+     */
     public Product findById(int id) {
         String sql = "SELECT * FROM products WHERE id = ?";
         Product product = null;
@@ -79,8 +88,11 @@ public class ProductDAO {
         return product;
     }
 
+    /**
+     * Atualiza os dados de um produto existente.
+     */
     public void update(Product product) {
-        String sql = "UPDATE products SET description = ?, quantity = ?, price = ? WHERE id = ?";
+        String sql = "UPDATE products SET descricao = ?, quantidade = ?, preco = ? WHERE id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -92,13 +104,16 @@ public class ProductDAO {
 
             stmt.executeUpdate();
 
-            System.out.println("Produto alterado ....");
+            System.out.println("Produto atualizado com sucesso!");
 
         } catch (SQLException e) {
-            System.err.println("Erro ao alterar produto: " + e.getMessage());
+            System.err.println("Erro ao atualizar produto: " + e.getMessage());
         }
     }
 
+    /**
+     * Deleta um produto pelo ID.
+     */
     public void delete(int id) {
         String sql = "DELETE FROM products WHERE id = ?";
 
@@ -108,14 +123,13 @@ public class ProductDAO {
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
-            System.out.println("Produto deletado....");
+            System.out.println("Produto deletado com sucesso!");
 
         } catch (SQLException e) {
             System.err.println("Erro ao deletar produto: " + e.getMessage());
         }
     }
 }
-
 
 
 
